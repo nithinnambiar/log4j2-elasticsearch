@@ -21,8 +21,6 @@ package org.appenders.log4j2.elasticsearch;
  */
 
 
-import org.apache.logging.log4j.status.StatusLogger;
-
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -41,7 +39,7 @@ import java.util.function.Function;
  */
 public class BulkEmitter<BATCH_TYPE> implements BatchEmitter {
 
-    protected static StatusLogger LOG = StatusLogger.getLogger();
+    protected static Logger LOG = StaticLogger.getLogger();
 
     private volatile State state = State.STOPPED;
 

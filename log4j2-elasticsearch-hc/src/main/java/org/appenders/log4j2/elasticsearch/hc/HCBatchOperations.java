@@ -83,7 +83,7 @@ public class HCBatchOperations implements BatchOperations<BatchRequest> {
     protected ObjectWriter configuredWriter() {
         return new ExtendedObjectMapper(new MappingJsonFactory())
                 .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
-                .registerModule(new AfterburnerModule())
+                //.registerModule(new AfterburnerModule())
                 .addMixIn(IndexRequest.class, IndexRequestMixIn.class)
                 .writerFor(IndexRequest.class);
     }

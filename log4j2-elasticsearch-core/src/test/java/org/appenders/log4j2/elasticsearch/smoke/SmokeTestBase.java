@@ -31,7 +31,9 @@ import org.apache.logging.log4j.core.async.AsyncLoggerConfig;
 import org.apache.logging.log4j.core.async.AsyncLoggerConfigDelegate;
 import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.status.StatusLogger;
 import org.appenders.log4j2.elasticsearch.ElasticsearchAppender;
+import org.appenders.log4j2.elasticsearch.StaticLogger;
 import org.junit.Test;
 
 import java.net.URI;
@@ -46,6 +48,35 @@ import static java.lang.Thread.sleep;
 
 public abstract class SmokeTestBase {
 
+    static {
+        final Logger logger = StatusLogger.getLogger();
+        StaticLogger.setLogger(new org.appenders.log4j2.elasticsearch.Logger() {
+            @Override
+            public void error(String messageFormat, Object... parameters) {
+                logger.error(messageFormat, parameters);
+            }
+
+            @Override
+            public void warn(String messageFormat, Object... parameters) {
+                logger.warn(messageFormat, parameters);
+            }
+
+            @Override
+            public void info(String messageFormat, Object... parameters) {
+                logger.info(messageFormat, parameters);
+            }
+
+            @Override
+            public void debug(String messageFormat, Object... parameters) {
+                logger.debug(messageFormat, parameters);
+            }
+
+            @Override
+            public void trace(String messageFormat, Object... parameters) {
+                logger.trace(messageFormat, parameters);
+            }
+        });
+    }
     public static final String DEFAULT_APPENDER_NAME = "elasticsearchAppender";
     public static final String DEFAULT_LOGGER_NAME = "elasticsearch";
     public static final Random RANDOM = new Random();
